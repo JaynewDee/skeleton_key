@@ -14,11 +14,14 @@ const resolvers = {
     },
   },
   Mutation: {
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
-      const token = signToken(user);
-
-      return { token, user };
+    addUser: async (parent, args, { res }) => {
+      try {
+        const user = await User.create(args);
+        const token = signToken(user);
+        return { token, user };
+      } catch (err) {
+        console.error(err);
+      }
     },
     updateUser: async (parent, args, context) => {
       if (context.user) {
@@ -26,10 +29,8 @@ const resolvers = {
           new: true,
         });
       }
-
       throw new AuthenticationError("Not logged in");
     },
-
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {

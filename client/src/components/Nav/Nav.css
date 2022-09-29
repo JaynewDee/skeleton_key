@@ -1,0 +1,12 @@
+nav {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 1rem 3rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  margin: 0.5rem;
+}
